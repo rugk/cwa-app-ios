@@ -30,7 +30,7 @@ platform :ios do
     setup_circle_ci
 
     if is_ci
-      xcversion(version: "~> 12.5.1")
+      xcversion(version: "~> 13.0.0")
     end
   end
 
