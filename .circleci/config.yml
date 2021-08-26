@@ -311,10 +311,6 @@ workflows:
                 displaymode: ["dark", "light"]
             requires:
               - dependencies
-            filters:
-              branches:
-                only:
-                  - /feature\/announce-failing-screenshots.*
         - collect-snapshots:
             requires:
               - snapshot
