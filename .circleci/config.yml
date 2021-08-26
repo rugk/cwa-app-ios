@@ -321,10 +321,6 @@ workflows:
         - update-docs:
             requires:
               - dependencies
-            filters:
-              branches:
-                only:
-                  - main
 
     beta-release:
       jobs:
