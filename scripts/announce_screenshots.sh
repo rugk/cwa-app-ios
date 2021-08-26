@@ -72,7 +72,5 @@ else
   }]
 }
 EOF
-  echo "Could not locate screenshots at $SCREENSHOT_URL"
-  return 1
 fi
 
