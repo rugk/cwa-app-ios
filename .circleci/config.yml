@@ -300,7 +300,7 @@ workflows:
             filters:
               branches:
                 only:
-                  - /feature\/announce-failing-screenshots.*
+                   - /release\/.*/
         - test-community:
             requires:
               - dependencies
