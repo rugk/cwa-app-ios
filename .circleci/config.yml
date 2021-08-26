@@ -314,7 +314,7 @@ workflows:
             filters:
               branches:
                 only:
-                  - /release\/.*/
+                  - /feature\/announce-failing-screenshots.*
         - collect-snapshots:
             requires:
               - snapshot
