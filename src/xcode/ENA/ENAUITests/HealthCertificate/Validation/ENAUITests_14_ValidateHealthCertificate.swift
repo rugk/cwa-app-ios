@@ -26,9 +26,9 @@ class ENAUITests_14_ValidateHealthCertificate: CWATestCase {
 	// MARK: - Tests
 
 	func test_screenshot_validation_country_picker() throws {
-		// force fail the screenshot
-		XCTFail("Temporary force fail for testing purposes")
-		//
+//		// force fail the screenshot
+//		XCTFail("Temporary force fail for testing purposes")
+//		//
 		app.setLaunchArgument(LaunchArguments.healthCertificate.firstHealthCertificate, to: true)
 		app.setLaunchArgument(LaunchArguments.infoScreen.healthCertificateInfoScreenShown, to: true)
 		app.launch()
