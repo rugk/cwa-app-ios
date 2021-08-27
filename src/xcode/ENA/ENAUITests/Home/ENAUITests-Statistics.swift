@@ -282,7 +282,7 @@ class ENAUITests_01b_Statistics: CWATestCase {
 		app.tables[AccessibilityIdentifiers.LocalStatistics.selectDistrict].cells.element(boundBy: 2).waitAndTap()
 		
 		XCTAssertTrue(app.cells["AppStrings.Home.appInformationCardTitle"].waitForExistence(timeout: .medium))
-		
+		XCTFail("Testing")
 		app.swipeDown(velocity: .slow)
 		XCTAssert(self.app.staticTexts[localStatisticsTitle].waitForExistence(timeout: .medium))
 		snapshot("statistics_local_7day_values")
