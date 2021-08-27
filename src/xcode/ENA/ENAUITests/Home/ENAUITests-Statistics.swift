@@ -282,7 +282,6 @@ class ENAUITests_01b_Statistics: CWATestCase {
 		app.tables[AccessibilityIdentifiers.LocalStatistics.selectDistrict].cells.element(boundBy: 2).waitAndTap()
 		
 		XCTAssertTrue(app.cells["AppStrings.Home.appInformationCardTitle"].waitForExistence(timeout: .medium))
-		XCTFail("Testing")
 		app.swipeDown(velocity: .slow)
 		XCTAssert(self.app.staticTexts[localStatisticsTitle].waitForExistence(timeout: .medium))
 		snapshot("statistics_local_7day_values")
@@ -324,7 +323,7 @@ class ENAUITests_01b_Statistics: CWATestCase {
 
 			XCTAssert(self.app.staticTexts[incidenceTitle].waitForExistence(timeout: .medium))
 			snapshot("statistics_7day_incidences")
-			app.staticTexts[incidenceTitle].swipeLeft()
+			// app.staticTexts[incidenceTitle].swipeLeft()
 
 			XCTAssert(self.app.staticTexts[infectionsTitle].waitForExistence(timeout: .medium))
 			snapshot("statistics_confirmed_new_infections")
