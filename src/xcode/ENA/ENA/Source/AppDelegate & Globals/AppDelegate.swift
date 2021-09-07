@@ -171,6 +171,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CoronaWarnAppDelegate, Re
 		updateExposureState(state)
 		Analytics.triggerAnalyticsSubmission()
 		appUpdateChecker.checkAppVersionDialog(for: window?.rootViewController)
+		checkIfBoosterRulesShouldBeFetched()
 	}
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
@@ -327,7 +328,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CoronaWarnAppDelegate, Re
 		signatureVerifying: dccSignatureVerificationService,
 		dscListProvider: dscListProvider,
 		client: client,
-		appConfiguration: appConfigurationProvider
+		appConfiguration: appConfigurationProvider,
+		boosterNotificationsService: BoosterNotificationsService(rulesDownloadService: RulesDownloadService(store: store, client: client))
 	)
 
 	private lazy var analyticsSubmitter: PPAnalyticsSubmitting = {
@@ -470,7 +472,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CoronaWarnAppDelegate, Re
 			eventStore: self.eventStore,
 			eventCheckoutService: self.eventCheckoutService,
 			store: self.store,
-			exposureSubmissionDependencies: self.exposureSubmissionServiceDependencies
+			exposureSubmissionDependencies: self.exposureSubmissionServiceDependencies,
+			healthCertificateService: self.healthCertificateService
 		)
 	}()
 
@@ -487,6 +490,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CoronaWarnAppDelegate, Re
 			showHealthCertificate: { [weak self] route in
 				// We must NOT call self?.showHome(route) here because we do not target the home screen. Only set the route. The rest is done automatically by the startup process of the app.
 				self?.route = route
+			}, showHealthCertifiedPerson: { [weak self] route in
+				// We must NOT call self?.showHome(route) here because we do not target the home screen. Only set the route. The rest is done automatically by the startup process of the app.
+				self?.showHome(route)
 			}
 		)
 		return notificationManager
@@ -798,6 +804,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CoronaWarnAppDelegate, Re
 		coordinator.showOnboarding()
 	}
 
+	private func checkIfBoosterRulesShouldBeFetched() {
+		if let lastExecutionDate = store.lastBoosterNotificationsExecutionDate,
+		   Calendar.utcCalendar.isDateInToday(lastExecutionDate) {
+			Log.info("Booster Notifications rules was already Download today, will be skipped...", log: .vaccination)
+		} else {
+			Log.info("Booster Notifications rules Will Download...", log: .vaccination)
+			healthCertificateService.applyBoosterRulesForHealthCertificates()
+		}
+	}
+	
 	#if DEBUG
 	private func setupOnboardingForTesting() {
 		if isUITesting {
