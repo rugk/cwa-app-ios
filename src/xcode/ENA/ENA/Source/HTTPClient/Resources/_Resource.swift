@@ -32,28 +32,26 @@ enum ResourceType {
 	case retrying
 }
 
-
-protocol ResourceDescribing {
+protocol ResponseResource {
 	// Model is type of the model
 	associatedtype Model
+	associatedtype ReqModel: RequestResource
 
 	var locator: Locator { get }
 	var type: ResourceType { get }
+	
+	var requestResource: ReqModel? { get }
 
 	func urlRequest(environmentData: EnvironmentData, customHeader: [String: String]?) -> Result<URLRequest, ResourceError>
-}
-
-/// describes a resource
-///
-protocol ResponseResource: ResourceDescribing {
 	func decode(_ data: Data?) -> Result<Model, ResourceError>
 }
 
-protocol RequestResource: ResourceDescribing {
+protocol RequestResource {
+	associatedtype Model
+
 	var model: Model? { get }
 	func encode() -> Result<Data?, ResourceError>
 }
-
 
 enum Resources {
 	enum response {

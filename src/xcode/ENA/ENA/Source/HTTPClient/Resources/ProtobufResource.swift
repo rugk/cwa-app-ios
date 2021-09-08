@@ -26,7 +26,9 @@ struct ProtobufResource<P>: RequestResource & ResponseResource where P: SwiftPro
 	// MARK: - Protocol ResponseResource
 
 	typealias Model = P
+	typealias ReqModel = EmptyRequestResource
 
+	var requestResource: EmptyRequestResource?
 	var locator: Locator
 	var type: ResourceType
 

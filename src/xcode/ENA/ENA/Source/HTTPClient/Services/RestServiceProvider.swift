@@ -9,12 +9,6 @@ protocol RestServiceProviding {
 		resource: T,
 		completion: @escaping (Result<T.Model?, ServiceError>) -> Void
 	) where T: ResponseResource
-/*
-	func submit<T>(
-		model: T.Model,
-		completion: @escaping (Result<T.Model?, ServiceError>) -> Void
-	) where T: RequestResource
-*/
 }
 
 class RestServiceProvider: RestServiceProviding {

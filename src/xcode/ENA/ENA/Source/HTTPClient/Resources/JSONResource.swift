@@ -4,6 +4,18 @@
 
 import Foundation
 
+/// helper to define en empty request body
+struct EmptyRequestResource: RequestResource {
+
+	typealias Model = Void
+
+	var model: Void?
+
+	func encode() -> Result<Data?, ResourceError> {
+		return .success(nil)
+	}
+}
+
 struct JSONResource<M: Codable>: ResponseResource {
 
 	// MARK: - Init
@@ -12,8 +24,10 @@ struct JSONResource<M: Codable>: ResponseResource {
 
 	// MARK: - Protocol ResponseResource
 
+	typealias ReqModel = EmptyRequestResource
 	typealias Model = M
-	
+
+	var requestResource: EmptyRequestResource?
 	var locator: Locator
 	var type: ResourceType = .default
 /*
